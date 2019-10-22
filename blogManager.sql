@@ -42,7 +42,7 @@ approved boolean not null
 
 create table tag(
 `id` int primary key auto_increment,
-name varchar(30)
+name varchar(30) not null
 );
 
 create table blogPost_tag(
