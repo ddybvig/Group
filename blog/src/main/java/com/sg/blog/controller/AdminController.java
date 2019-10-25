@@ -63,12 +63,18 @@ public class AdminController {
     }
      
     @GetMapping("/editUser")
-    public String editUserDisplay(Model model, Integer id) {
+    public String editUserDisplay(Model model, Integer id, Integer error) {
         User user = users.findById(id).orElse(null);
         List<Role> roleList = roles.findAll();
         
         model.addAttribute("user", user);
         model.addAttribute("roles", roleList);
+        
+         if(error != null) {
+            if(error == 1) {
+                model.addAttribute("error", "Passwords did not match, password was not updated.");
+            }
+        }
         return "editUser";
     }
     
@@ -88,7 +94,20 @@ public class AdminController {
         }
         user.setRoles(roleList);
         users.save(user);
-        
+         
         return "redirect:/admin";
+    }
+     @PostMapping("editPassword") 
+    public String editPassword(Integer id, String password, String confirmPassword) {
+        User user = users.findById(id).orElse(null);
+        
+        if(password.equals(confirmPassword)) {
+            user.setPassword(encoder.encode(password));
+            users.save(user);
+            return "redirect:/admin";
+        } else {
+            return "redirect:/editUser?id=" + id + "&error=1";
+        }
+     
     }
 }

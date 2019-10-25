@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author MARIA
  */
 @Repository
-public interface TagDao extends JpaRepository  <Tag, Integer> {
-    
+public interface TagDao extends JpaRepository<Tag, Integer> {
+
+    Tag findByName(String name);
 }
