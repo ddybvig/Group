@@ -16,23 +16,31 @@
         <div class="container">
             <h1>Dale's House of Memes</h1>
             <hr/>
-            <div class="navbar">
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="nav-item">
+            <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd">
+                <div>
+                    <ul class="navbar-nav">
+                    <li class="nav-item">
                         <a class="nav-link" href="home">
                             Home
                         </a>
                     </li>
-                    <li role="presentation" class="nav-item">
-                        <a class="nav-link" href="">placeholder
+                        <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" href="addContent">add content
                         </a>
                     </li>
-                    <li role="presentation" class="nav-item">
-                        <a class="nav-link active" href="">placeholder
+                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">another static page
                         </a>
                     </li>
-                </ul>    
-            </div>
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </ul>
+                </div>
+            </nav>
             <div sec:authorize="isAuthenticated()">
                 <form class="form-inline" 
                       method="POST" 
