@@ -7,8 +7,11 @@ package com.sg.blog.controller;
 
 import com.sg.blog.dao.BlogPostDao;
 import com.sg.blog.dao.TagDao;
+import com.sg.blog.dao.UserDao;
 import com.sg.blog.entities.BlogPost;
 import com.sg.blog.entities.Tag;
+import com.sg.blog.entities.User;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +35,9 @@ public class ContentController {
 
     @Autowired
     BlogPostDao blogDao;
+    
+    @Autowired
+    UserDao userDao;
 
     @GetMapping("/content")
     public String displayContentPage() {
@@ -39,7 +45,7 @@ public class ContentController {
     }
 
     @PostMapping("addContent")
-    public String addContent(HttpServletRequest request) {
+    public String addContent(HttpServletRequest request, Principal principal) {
         String content = request.getParameter("mytextarea");
         BlogPost blogPost = new BlogPost();
         blogPost.setBody(content);
@@ -62,6 +68,9 @@ public class ContentController {
         if (request.getParameter("expDate") != null) {
             blogPost.setExpirationDate(LocalDate.parse(request.getParameter("expDate"), DateTimeFormatter.ISO_DATE));
         }
+        blogPost.setApproved(request.isUserInRole("ROLE_ADMIN"));
+        User user = userDao.findByUsername(principal.getName());
+        blogPost.setUser(user);
         blogPost = blogDao.save(blogPost);
         return "redirect:/home";
     }
