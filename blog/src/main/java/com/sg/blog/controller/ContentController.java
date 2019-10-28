@@ -6,9 +6,11 @@
 package com.sg.blog.controller;
 
 import com.sg.blog.dao.BlogPostDao;
+import com.sg.blog.dao.StaticPageDao;
 import com.sg.blog.dao.TagDao;
 import com.sg.blog.dao.UserDao;
 import com.sg.blog.entities.BlogPost;
+import com.sg.blog.entities.StaticPage;
 import com.sg.blog.entities.Tag;
 import com.sg.blog.entities.User;
 import java.security.Principal;
@@ -39,6 +41,9 @@ public class ContentController {
     
     @Autowired
     UserDao userDao;
+    
+    @Autowired
+    StaticPageDao staticDao;
 
     @GetMapping("/content")
     public String displayContentPage() {
@@ -123,6 +128,31 @@ public class ContentController {
         }
         blogPost.setApproved(request.isUserInRole("ROLE_ADMIN"));
         blogPost = blogDao.save(blogPost);
+        return "redirect:/home";
+    }
+    
+    @GetMapping("addStaticPage")
+    public String addStaticPage(Model model) {
+        model.addAttribute("staticpage", new StaticPage());
+        return "addStaticPage";
+    }
+
+    @PostMapping("addStaticPage")
+    public String performAddStaticPage(StaticPage staticPage) {
+        staticPage = staticDao.save(staticPage);
+        return "redirect:/home";
+    }
+    
+    @GetMapping("editStaticPage")
+    public String editStaticPage(Integer id, Model model) {
+        StaticPage staticPage = staticDao.findById(id).orElse(null);
+        model.addAttribute("staticpage", staticPage);
+        return "editStaticPage";
+    }
+    
+    @PostMapping("editStaticPage")
+    public String performEditStaticPage(StaticPage staticPage) {
+        staticPage = staticDao.save(staticPage);
         return "redirect:/home";
     }
 }

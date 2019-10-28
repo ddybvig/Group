@@ -13,7 +13,7 @@
         <script src='https://cdn.tiny.cloud/1/s0fh0kjnqdb0pshsf7rcvssjapn86vdsd5y1xyge4e95xer4/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
         <script>
             tinymce.init({
-                selector: '#blogtextarea'
+                selector: '#body'
             });
         </script>
         <title>Dale's House of Memes</title>
@@ -41,9 +41,9 @@
             </div>
             <div class="row">
                 <div id="add-content-div" class="col-12 text-center">
-                    <h3>Add Blog Post</h3>
+                    <h3>Add Static Page</h3>
                     <hr/>
-                    <form action="addContent" method="post">
+                    <form action="addStaticPage" method="post">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <div class="form-group row text-left">
                             <label for="title" class="col-md-2 offset-md-1 col-sm-3 col-4 col-form-label">
@@ -52,41 +52,22 @@
                             <div class="col-md-8 col-sm-9 col-8">
                                 <input type="text" class="form-control"
                                        id="title" name="title"
-                                       th:value="${blogpost.title}"/>
+                                       th:value="${staticpage.title}"/>
                             </div>
                         </div>
                         <div class="form-group row text-left">
-                            <label for="blogtextarea" class="col-md-2 offset-md-1 col-sm-3 col-4 col-form-label">
-                                <b>BLOG POST</b>
+                            <label for="body" class="col-md-2 offset-md-1 col-sm-3 col-4 col-form-label">
+                                <b>STATIC PAGE</b>
                             </label>
                             <div class="col-md-8 col-sm-9 col-8">
-                                <textarea id="blogtextarea" name="blogtextarea"
-                                          th:utext="${blogpost.body}"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row text-left">
-                            <label for="tags" class="col-md-2 offset-md-1 col-sm-3 col-4 col-form-label">
-                                <b>TAGS</b>
-                            </label>
-                            <div class="col-md-8 col-sm-9 col-8">
-                                <input type="text" class="form-control"
-                                       id="tags" name="tags"
-                                       th:value="${blogpost.tags}"/>
-                            </div>
-                        </div>
-                        <div class="form-group row text-left">
-                            <label class="col-md-2 offset-md-1 col-sm-3 col-4 col-form-label" for="date">
-                                <b>EXPIRATION DATE</b>
-                            </label>
-                            <div class="col-md-8 col-sm-9 col-8">
-                                <input class="form-control" id="expDate" name="expDate"
-                                       placeholder="MM/DD/YYYY" type="date" th:value="${blogpost.expirationDate}"/>
+                                <textarea id="body" name="body"
+                                          th:utext="${staticpage.body}"></textarea>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-2 col-md-3 col-sm-4 col-5 offset-lg-4 offset-md-3 offset-sm-2 offset-1 mb-4">
                                 <button class="btn btn-primary" type="submit">
-                                    Add Blog Post
+                                    Add Static Page
                                 </button>
                             </div>
                             <div class="col-lg-2 col-md-3 col-sm-4 col-5 mb-4">
@@ -120,3 +101,4 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </body>
 </html>
+
