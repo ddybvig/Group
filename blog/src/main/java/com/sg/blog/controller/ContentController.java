@@ -131,6 +131,12 @@ public class ContentController {
         return "redirect:/home";
     }
     
+    @GetMapping("deleteContent")
+    public String deleteContent(Integer id) {
+        blogDao.deleteById(id);
+        return "redirect:/home";
+    }
+    
     @GetMapping("addStaticPage")
     public String addStaticPage(Model model) {
         model.addAttribute("staticpage", new StaticPage());
@@ -153,6 +159,12 @@ public class ContentController {
     @PostMapping("editStaticPage")
     public String performEditStaticPage(StaticPage staticPage) {
         staticPage = staticDao.save(staticPage);
+        return "redirect:/home";
+    }
+    
+    @GetMapping("deleteStaticPage")
+    public String deleteStaticPage(Integer id) {
+        staticDao.deleteById(id);
         return "redirect:/home";
     }
 }
