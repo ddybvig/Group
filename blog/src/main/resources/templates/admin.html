@@ -1,4 +1,8 @@
-<html lang="en">
+<!doctype html>
+<html lang="en"      
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -7,11 +11,11 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-        <title>Hello Security: Admin</title>
+        <title>Dale's House of Memes</title>
     </head>
     <body>
         <div class="container">
-            <h1>Hello Security</h1>
+            <h1>Dale's House of Memes</h1>
             <hr/>
             <div class="navbar">
                 <ul class="nav nav-tabs">
@@ -21,19 +25,32 @@
                         </a>
                     </li>
                     <li role="presentation" class="nav-item">
-                        <a class="nav-link" href="content">
-                            Content (must have the user role)
+                        <a class="nav-link" href="">placeholder
                         </a>
                     </li>
                     <li role="presentation" class="nav-item">
-                        <a class="nav-link active" href="admin">
-                            Admin (must have the admin role)
+                        <a class="nav-link active" href="">placeholder
                         </a>
                     </li>
                 </ul>    
             </div>
             <h2>Admin Page</h2>
-
+            <div sec:authorize="isAuthenticated()">
+                <form class="form-inline" 
+                      method="POST" 
+                      action="/logout">
+                    <input type="hidden" 
+                            th:name="${_csrf.parameterName}" 
+                            th:value="${_csrf.token}"/>
+                    <label for="submit">
+                      Hello : <span th:text="${#authentication.name}">
+                              </span>&nbsp;&nbsp;&nbsp;|
+                    </label>
+                    <button class="btn btn-link" 
+                          id="submit" 
+                          type="submit">Logout</button>
+                </form>
+            </div>
             <p>
                 Only users with the ADMIN role can see this page.
             </p>

@@ -5,8 +5,8 @@
  */
 package com.sg.blog.entities;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,16 +20,17 @@ import javax.persistence.ManyToMany;
  */
 @Entity
 public class Role {
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   @Id
-   @Column(nullable = false) 
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(nullable = false)
     private int id;
-   
-   @Column(nullable = false)
-     private String role;
-   
-   @ManyToMany(mappedBy = "roles")
-   Set<User> users;
+
+    @Column(nullable = false)
+    private String role;
+
+    @ManyToMany(mappedBy = "roles")
+    List<User> users;
 
     public int getId() {
         return id;
@@ -47,20 +48,20 @@ public class Role {
         this.role = role;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.id;
-        hash = 79 * hash + Objects.hashCode(this.role);
-        hash = 79 * hash + Objects.hashCode(this.users);
+        int hash = 3;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.role);
+        hash = 89 * hash + Objects.hashCode(this.users);
         return hash;
     }
 
@@ -87,7 +88,4 @@ public class Role {
         }
         return true;
     }
-    
-    
-    
 }

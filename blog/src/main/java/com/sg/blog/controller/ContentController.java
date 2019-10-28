@@ -63,6 +63,6 @@ public class ContentController {
             blogPost.setExpirationDate(LocalDate.parse(request.getParameter("expDate"), DateTimeFormatter.ISO_DATE));
         }
         blogPost = blogDao.save(blogPost);
-        return "redirect/home:";
+        return "redirect:/home";
     }
 }

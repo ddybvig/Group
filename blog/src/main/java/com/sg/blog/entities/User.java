@@ -5,10 +5,11 @@
  */
 package com.sg.blog.entities;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,28 +20,30 @@ import javax.persistence.ManyToMany;
 /**
  *
  * @author MARIA
- */ 
+ */
 @Entity
 public class User {
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   @Id
-   @Column(nullable = false)
-   private int id;
-   
-   @Column(nullable = false)
-   private String username;
-   
-   @Column(nullable = false)
-   private String password;
-   
-   @Column(nullable = false)
-   private boolean enabled;
-   
-   @ManyToMany 
-     @JoinTable(name = "user_role", 
-             joinColumns = {@JoinColumn(name = "userId")},
-             inverseJoinColumns = {@JoinColumn(name ="roleId" )}) 
-    private Set<Role> roles; 
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private int id;
+
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private boolean enabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = {
+                @JoinColumn(name = "userid")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "roleid")})
+    private List<Role> roles;
 
     public int getId() {
         return id;
@@ -74,22 +77,22 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + this.id;
-        hash = 29 * hash + Objects.hashCode(this.username);
-        hash = 29 * hash + Objects.hashCode(this.password);
-        hash = 29 * hash + (this.enabled ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.roles);
+        int hash = 3;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.username);
+        hash = 97 * hash + Objects.hashCode(this.password);
+        hash = 97 * hash + (this.enabled ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.roles);
         return hash;
     }
 
@@ -122,7 +125,4 @@ public class User {
         }
         return true;
     }
-    
-    
-   
 }

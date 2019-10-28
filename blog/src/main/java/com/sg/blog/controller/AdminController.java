@@ -9,9 +9,8 @@ import com.sg.blog.dao.RoleDao;
 import com.sg.blog.dao.UserDao;
 import com.sg.blog.entities.Role;
 import com.sg.blog.entities.User;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -47,7 +46,7 @@ public class AdminController {
         user.setPassword(encoder.encode(password));
         user.setEnabled(true);
         
-        Set<Role> userRoles = new HashSet<>();
+        List<Role> userRoles = new ArrayList<>();
         userRoles.add(roles.findByRole("ROLE_USER"));
         user.setRoles(userRoles);
         
@@ -87,7 +86,7 @@ public class AdminController {
             user.setEnabled(false);
         }
         
-        Set<Role> roleList = new HashSet<>();
+        List<Role> roleList = new ArrayList<>();
         for(String roleId : roleIdList) {
             Role role = roles.findById(Integer.parseInt(roleId)).orElse(null);
             roleList.add(role);

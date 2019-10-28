@@ -5,30 +5,31 @@
  */
 package com.sg.blog.entities;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author MARIA
  */
 @Entity
+@Table(name = "staticpage")
 public class StaticPage {
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   @Id
-   @Column(nullable = false)
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(nullable = false)
     private int id;
-   
-   @Column(nullable = false)
+
+    @Column(nullable = false)
     private String title;
-   
-   @Column(nullable = false)
+
+    @Column(nullable = false)
     private String body;
 
     public int getId() {
@@ -57,10 +58,10 @@ public class StaticPage {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.id;
-        hash = 97 * hash + Objects.hashCode(this.title);
-        hash = 97 * hash + Objects.hashCode(this.body);
+        int hash = 7;
+        hash = 79 * hash + this.id;
+        hash = 79 * hash + Objects.hashCode(this.title);
+        hash = 79 * hash + Objects.hashCode(this.body);
         return hash;
     }
 
@@ -87,8 +88,4 @@ public class StaticPage {
         }
         return true;
     }
-   
-   
- 
-     
 }

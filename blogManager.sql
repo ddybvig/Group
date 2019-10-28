@@ -15,11 +15,11 @@ create table `role`(
 );
 
 create table `user_role`(
-`user_id` int not null,
-`role_id` int not null,
-primary key(`user_id`,`role_id`),
-foreign key (`user_id`) references `user`(`id`),
-foreign key (`role_id`) references `role`(`id`));
+`userid` int not null,
+`roleid` int not null,
+primary key(`userid`,`roleid`),
+foreign key (`userid`) references `user`(`id`),
+foreign key (`roleid`) references `role`(`id`));
 
 insert into `user`(`id`,`username`,`password`,`enabled`)
     values(1,"admin", "password", true),
@@ -28,16 +28,18 @@ insert into `user`(`id`,`username`,`password`,`enabled`)
 insert into `role`(`id`,`role`)
     values(1,"ROLE_ADMIN"), (2,"ROLE_USER");
     
-insert into `user_role`(`user_id`,`role_id`)
+insert into `user_role`(`userid`,`roleid`)
     values(1,1),(1,2),(2,2);
 
-create table blogPost(
+create table blogpost(
 `id` int primary key auto_increment,
 title varchar(60) not null, 
 body text not null,
 `date` dateTime not null,
-expirationDate date,
-approved boolean not null
+expirationdate date,
+approved boolean not null,
+`userid` int not null,
+foreign key (`userid`) references `user`(`id`)
 );
 
 create table tag(
@@ -45,16 +47,19 @@ create table tag(
 name varchar(30) not null
 );
 
-create table blogPost_tag(
-blogPost_id int not null,
-tag_id int not null,
-primary key (blogPost_id, tag_id),
-foreign key (blogPost_id) references blogPost(id),
-foreign key (tag_id) references tag(id)
+create table blogpost_tag(
+blogpostid int not null,
+tagid int not null,
+primary key (blogpostid, tagid),
+foreign key (blogpostid) references blogpost(id),
+foreign key (tagid) references tag(id)
 );
 
-create table staticPage (
+create table staticpage (
 `id` int primary key auto_increment,
 title varchar(60) not null, 
 body text not null
 );
+
+update user set password = '$2a$10$PPpQx1AfFn2Rmp4bGxv5u.AgUPnpUCq6iGJ4.eCboXek0z/Mk3iYW' where id = 1;
+update user set password = '$2a$10$PPpQx1AfFn2Rmp4bGxv5u.AgUPnpUCq6iGJ4.eCboXek0z/Mk3iYW' where id = 2;

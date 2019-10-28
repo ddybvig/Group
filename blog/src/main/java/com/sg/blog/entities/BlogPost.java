@@ -17,41 +17,49 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author MARIA
  */
-@Entity 
+@Entity
+@Table(name = "blogpost")
 public class BlogPost {
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   @Id
-   @Column(nullable = false)
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(nullable = false)
     private int id;
-   
-   @Column(nullable = false)
+
+    @Column(nullable = false)
     private String title;
-   
-   @Column(nullable = false)
+
+    @Column(nullable = false)
     private String body;
-   
-   @Column(nullable = false)
+
+    @Column(nullable = false)
     private LocalDateTime date;
-   
+
+    @Column(name = "expirationdate")
     private LocalDate expirationDate;
-    
+
     @Column(nullable = false)
     private boolean approved;
-     
-    @ManyToMany 
-     @JoinTable(name = "blogPost_tag", 
-             joinColumns = {@JoinColumn(name = "blogpostId")},
-             inverseJoinColumns = {@JoinColumn(name ="tagId" )})        
-                   
-    List<Tag> tags; 
 
-    
+    @ManyToMany
+    @JoinTable(name = "blogpost_tag",
+            joinColumns = {
+                @JoinColumn(name = "blogpostid")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "tagid")})
+    List<Tag> tags;
+
+    @ManyToOne
+    @JoinColumn(name = "userid", nullable = false)
+    private User user;
+
     public int getId() {
         return id;
     }
@@ -108,16 +116,25 @@ public class BlogPost {
         this.tags = tags;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + this.id;
-        hash = 61 * hash + Objects.hashCode(this.title);
-        hash = 61 * hash + Objects.hashCode(this.body);
-        hash = 61 * hash + Objects.hashCode(this.date);
-        hash = 61 * hash + Objects.hashCode(this.expirationDate);
-        hash = 61 * hash + (this.approved ? 1 : 0);
-        hash = 61 * hash + Objects.hashCode(this.tags);
+        int hash = 5;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.title);
+        hash = 97 * hash + Objects.hashCode(this.body);
+        hash = 97 * hash + Objects.hashCode(this.date);
+        hash = 97 * hash + Objects.hashCode(this.expirationDate);
+        hash = 97 * hash + (this.approved ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.tags);
+        hash = 97 * hash + Objects.hashCode(this.user);
         return hash;
     }
 
@@ -154,10 +171,9 @@ public class BlogPost {
         if (!Objects.equals(this.tags, other.tags)) {
             return false;
         }
+        if (!Objects.equals(this.user, other.user)) {
+            return false;
+        }
         return true;
     }
-
-    
-    
-    
 }

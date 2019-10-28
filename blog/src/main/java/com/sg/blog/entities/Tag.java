@@ -28,9 +28,9 @@ public class Tag {
 
     @Column(nullable = false)
     private String name;
-    
+
     @ManyToMany(mappedBy = "tags")
-    private List<BlogPost> blogPosts;
+    private List<BlogPost> blogposts;
 
     public int getId() {
         return id;
@@ -51,8 +51,9 @@ public class Tag {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + this.id;
-        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + Objects.hashCode(this.name);
+        hash = 29 * hash + Objects.hashCode(this.blogposts);
         return hash;
     }
 
@@ -74,8 +75,10 @@ public class Tag {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
+        if (!Objects.equals(this.blogposts, other.blogposts)) {
+            return false;
+        }
         return true;
     }
 
-    
 }
