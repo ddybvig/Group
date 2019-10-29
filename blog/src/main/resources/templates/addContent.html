@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
               crossorigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css?family=Creepster|Nunito:300&display=swap" rel="stylesheet"/>
+        <link href="css/blog.css" rel="stylesheet"/>
         <script src='https://cdn.tiny.cloud/1/s0fh0kjnqdb0pshsf7rcvssjapn86vdsd5y1xyge4e95xer4/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
         <script>
             tinymce.init({
@@ -47,7 +49,7 @@
                     </ul>
                 </div>
             </nav>
-            <div sec:authorize="isAuthenticated()">
+            <div class="authorize-div" sec:authorize="isAuthenticated()">
                 <form class="form-inline" 
                       method="POST" 
                       action="/logout">
@@ -55,8 +57,7 @@
                            th:name="${_csrf.parameterName}" 
                            th:value="${_csrf.token}"/>
                     <label for="submit">
-                        Hello : <span th:text="${#authentication.name}">
-                        </span>&nbsp;&nbsp;&nbsp;|
+                        Hello:&nbsp;<span th:text="${#authentication.name}"></span>
                     </label>
                     <button class="btn btn-link" 
                             id="submit" 
@@ -65,7 +66,7 @@
             </div>
             <div class="row">
                 <div id="add-content-div" class="col-12 text-center">
-                    <h3>Add Blog Post</h3>
+                    <h2>Add Blog Post</h2>
                     <hr/>
                     <form action="addContent" method="post">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

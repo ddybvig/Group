@@ -1,0 +1,22 @@
+html, body {
+    font-family: 'Nunito', sans-serif;
+}
+
+h1 {
+    font-family: 'Creepster', cursive;
+    font-size: 350%;
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Creepster', cursive;
+    text-align: center;
+}
+
+h3{
+    font-family: 'Creepster', cursive;
+}
+
+.authorize-div {
+    background-color: #FF5D00;
+}
