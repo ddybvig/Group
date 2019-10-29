@@ -41,6 +41,14 @@
                     </ul>
                 </div>
             </nav>
+            <div>
+                <div th:each="post : ${posts}">
+                    <h2 th:text="${post.title}">title</h2>
+                    <div sec:authorize="isAuthenticated()"><a th:href="@{/approveContent(id=${post.id})}">Approve</a></div>
+                    <p th:utext="${post.body}"> post body</p>
+                    <p th:each="tag : ${post.tags}" th:text="${tag.name}"></p>
+                </div>
+            </div>
             <div sec:authorize="isAuthenticated()">
                 <form class="form-inline" 
                       method="POST" 
