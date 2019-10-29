@@ -46,7 +46,7 @@
                     <h2 th:text="${post.title}">title</h2>
                     <div sec:authorize="isAuthenticated()"><a th:href="@{/approveContent(id=${post.id})}">Approve</a></div>
                     <p th:utext="${post.body}"> post body</p>
-                    <p th:each="tag : ${post.tags}" th:text="${tag.name}"></p>
+                    <p th:text="${#strings.listJoin(tagMap.get(post.id), ' ')}"></p>
                 </div>
             </div>
             <div sec:authorize="isAuthenticated()">
