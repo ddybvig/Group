@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sg.blog.controller;
 
 import com.sg.blog.dao.RoleDao;
@@ -34,12 +29,13 @@ public class AdminController {
     @Autowired
     PasswordEncoder encoder;
 
-    @GetMapping("/admin")
-    public String diplayAdminPage() {
+    @GetMapping("admin")
+    public String diplayAdminPage(Model model) {
+        model.addAttribute("users", users.findAll());
         return "admin";
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("addUser")
     public String addUser(String username, String password) {
         User user = new User();
         user.setUsername(username);
@@ -55,13 +51,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/deleteUser")
+    @GetMapping("deleteUser")
     public String deleteUser(Integer id) {
         users.deleteById(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("/editUser")
+    @GetMapping("editUser")
     public String editUserDisplay(Model model, Integer id, Integer error) {
         User user = users.findById(id).orElse(null);
         List<Role> roleList = roles.findAll();
@@ -77,7 +73,7 @@ public class AdminController {
         return "editUser";
     }
 
-    @PostMapping(value = "/editUser")
+    @PostMapping("editUser")
     public String editUserAction(String[] roleIdList, Boolean enabled, Integer id) {
         User user = users.findById(id).orElse(null);
         if (enabled != null) {

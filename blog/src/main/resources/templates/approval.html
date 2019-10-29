@@ -19,21 +19,21 @@
             <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd">
                 <div>
                     <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="home">
-                            Home
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="home">
+                                Home
+                            </a>
+                        </li>
                         <div sec:authorize="isAuthenticated()">
-                    <li class="nav-item">
-                        <a class="nav-link" href="addContent">add content
-                        </a>
-                    </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="addContent">add content
+                                </a>
+                            </li>
                         </div>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">another static page
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">another static page
+                            </a>
+                        </li>
                         <form class="form-inline">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -41,14 +41,6 @@
                     </ul>
                 </div>
             </nav>
-            <div>
-                <div th:each="post : ${posts}">
-                    <h2 th:text="${post.title}">title</h2>
-                    <div sec:authorize="isAuthenticated()"><a th:href="@{/approveContent(id=${post.id})}">Approve</a></div>
-                    <p th:utext="${post.body}"> post body</p>
-                    <p th:text="${#strings.listJoin(tagMap.get(post.id), ' ')}"></p>
-                </div>
-            </div>
             <div sec:authorize="isAuthenticated()">
                 <form class="form-inline" 
                       method="POST" 
@@ -64,6 +56,14 @@
                             id="submit" 
                             type="submit">Logout</button>
                 </form>
+            </div>
+            <div>
+                <div th:each="post : ${posts}">
+                    <h2 th:text="${post.title}">title</h2>
+                    <div sec:authorize="isAuthenticated()"><a th:href="@{/approveContent(id=${post.id})}">Approve</a></div>
+                    <p th:utext="${post.body}"> post body</p>
+                    <p th:text="${#strings.listJoin(tagMap.get(post.id), ' ')}"></p>
+                </div>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
