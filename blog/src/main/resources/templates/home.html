@@ -17,9 +17,9 @@
     </head>
     <body>
         <div class="container">
-            <h1>Dale's House of Memes</h1>
+            <div class="row"><h1>Dale's House of Memes</h1></div>
             <hr/>
-            <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd">
+            <nav class="navbar navbar-expand-lg row" style="background-color: #e3f2fd">
                 <div>
                     <ul class="navbar-nav">
                     <li class="nav-item">
@@ -37,14 +37,15 @@
                         <a class="nav-link active" href="#">static page
                         </a>
                     </li>
-                    <form action="searchByTag" class="form-inline">
+                    <form action="searchResults" class="form-inline">
                         <input class="form-control mr-sm-2" type="text" name="searchInput" id="searchInput" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Tag</button>
                     </form>
                     </ul>
                 </div>
             </nav>
-            <div>
+            <div class="row"><span th:if="${searchErrorMessage != null}" th:text="${searchErrorMessage}" class="alert alert-danger"></span></div>
+            <div class="row">
                 <div th:each="post : ${posts}" class="border border-dark rounded container t-2">
                     <h2 th:text="${post.title}">title</h2>
                     <div sec:authorize="isAuthenticated()"><a th:href="@{/editContent(id=${post.id})}">Edit</a></div>
