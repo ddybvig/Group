@@ -29,12 +29,12 @@
                     </li>
                         <div sec:authorize="isAuthenticated()">
                     <li class="nav-item">
-                        <a class="nav-link" href="addContent">add content
+                        <a class="nav-link" href="addContent">Add Content
                         </a>
                     </li>
                         </div>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">another static page
+                        <a class="nav-link active" href="#">static page
                         </a>
                     </li>
                     <form class="form-inline">
@@ -45,12 +45,12 @@
                 </div>
             </nav>
             <div>
-                <div th:each="post : ${posts}">
+                <div th:each="post : ${posts}" class="border border-dark rounded container t-2">
                     <h2 th:text="${post.title}">title</h2>
-                    <div sec:authorize="isAuthenticated()"><a href="editContent">Edit</a></div>
+                    <div sec:authorize="isAuthenticated()"><a th:href="@{/editContent(id=${post.id})}">Edit</a></div>
                     <p th:utext="${post.body}"> post body</p>
-                    <p th:each="tag : ${post.tags}" th:text="${tag.name}">
-                    </p>
+                    <p th:each="tag : ${post.tags}" th:text="${tag.name}"></p>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/deleteContent(id=${post.id})}">Delete Post</a></div>
                 </div>
                 
             </div>
