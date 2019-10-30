@@ -74,6 +74,14 @@ public class HomeController {
                 }
             }
             model.addAttribute("posts", posts);
+            Map<Integer, List<String>> tagMap = new HashMap<>();
+            for (BlogPost post : posts) {
+                List<Tag> tagsReload = post.getTags();
+                tagMap.put(post.getId(), post.getTags().stream()
+                        .map(t -> t.getName())
+                        .collect(Collectors.toList()));
+            }
+            model.addAttribute("tagMap", tagMap);
             model.addAttribute("staticpages", staticDao.findAll());
             return "searchResults";
         } else {
