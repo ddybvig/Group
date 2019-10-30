@@ -1,6 +1,7 @@
 package com.sg.blog.controller;
 
 import com.sg.blog.dao.RoleDao;
+import com.sg.blog.dao.StaticPageDao;
 import com.sg.blog.dao.UserDao;
 import com.sg.blog.entities.Role;
 import com.sg.blog.entities.User;
@@ -27,11 +28,15 @@ public class AdminController {
     UserDao users;
 
     @Autowired
+    StaticPageDao staticDao;
+
+    @Autowired
     PasswordEncoder encoder;
 
     @GetMapping("admin")
     public String diplayAdminPage(Model model) {
         model.addAttribute("users", users.findAll());
+        model.addAttribute("staticpages", staticDao.findAll());
         return "admin";
     }
 
@@ -64,6 +69,7 @@ public class AdminController {
 
         model.addAttribute("user", user);
         model.addAttribute("roles", roleList);
+        model.addAttribute("staticpages", staticDao.findAll());
 
         if (error != null) {
             if (error == 1) {

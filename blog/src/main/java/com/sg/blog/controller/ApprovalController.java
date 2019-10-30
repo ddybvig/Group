@@ -6,6 +6,7 @@
 package com.sg.blog.controller;
 
 import com.sg.blog.dao.BlogPostDao;
+import com.sg.blog.dao.StaticPageDao;
 import com.sg.blog.entities.BlogPost;
 import com.sg.blog.entities.Tag;
 import java.util.HashMap;
@@ -27,6 +28,9 @@ public class ApprovalController {
     @Autowired
     BlogPostDao blogDao;
 
+    @Autowired
+    StaticPageDao staticDao;
+
     @GetMapping("approval")
     public String displayApprovalPage(Model model) {
         List<BlogPost> posts = blogDao.findByApprovedFalse();
@@ -39,6 +43,7 @@ public class ApprovalController {
         }
         model.addAttribute("posts", posts);
         model.addAttribute("tagMap", tagMap);
+        model.addAttribute("staticpages", staticDao.findAll());
         return "approval";
     }
 

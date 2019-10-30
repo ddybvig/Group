@@ -38,10 +38,10 @@ public class ContentController {
 
     @Autowired
     BlogPostDao blogDao;
-    
+
     @Autowired
     UserDao userDao;
-    
+
     @Autowired
     StaticPageDao staticDao;
 
@@ -49,10 +49,11 @@ public class ContentController {
     public String displayContentPage() {
         return "content";
     }
-    
+
     @GetMapping("addContent")
     public String addContent(Model model) {
         model.addAttribute("blogpost", new BlogPost());
+        model.addAttribute("staticpages", staticDao.findAll());
         return "addContent";
     }
 
@@ -86,16 +87,17 @@ public class ContentController {
         blogPost = blogDao.save(blogPost);
         return "redirect:/home";
     }
-    
+
     @GetMapping("editContent")
     public String editContent(Integer id, Model model) {
         BlogPost blogPost = blogDao.findById(id).orElse(null);
         model.addAttribute("blogpost", blogPost);
         List<String> tags = new ArrayList<>();
-        for(Tag tag: blogPost.getTags()){
+        for (Tag tag : blogPost.getTags()) {
             tags.add(tag.getName());
         }
         model.addAttribute("tags", tags);
+        model.addAttribute("staticpages", staticDao.findAll());
         return "editContent";
     }
 
@@ -120,7 +122,7 @@ public class ContentController {
         }
         blogPost.setTags(tags);
         String updateDate = request.getParameter("updateDate");
-        if(Boolean.parseBoolean(updateDate)){
+        if (Boolean.parseBoolean(updateDate)) {
             blogPost.setDate(LocalDateTime.now().withNano(0));
         }
         if (request.getParameter("expDate") != null) {
@@ -130,16 +132,17 @@ public class ContentController {
         blogPost = blogDao.save(blogPost);
         return "redirect:/home";
     }
-    
+
     @GetMapping("deleteContent")
     public String deleteContent(Integer id) {
         blogDao.deleteById(id);
         return "redirect:/home";
     }
-    
+
     @GetMapping("addStaticPage")
     public String addStaticPage(Model model) {
         model.addAttribute("staticpage", new StaticPage());
+        model.addAttribute("staticpages", staticDao.findAll());
         return "addStaticPage";
     }
 
@@ -148,20 +151,29 @@ public class ContentController {
         staticPage = staticDao.save(staticPage);
         return "redirect:/home";
     }
-    
+
+    @GetMapping("viewPage")
+    public String viewPage(Integer id, Model model) {
+        StaticPage staticPage = staticDao.findById(id).orElse(null);
+        model.addAttribute("staticpage", staticPage);
+        model.addAttribute("staticpages", staticDao.findAll());
+        return "viewPage";
+    }
+
     @GetMapping("editStaticPage")
     public String editStaticPage(Integer id, Model model) {
         StaticPage staticPage = staticDao.findById(id).orElse(null);
         model.addAttribute("staticpage", staticPage);
+        model.addAttribute("staticpages", staticDao.findAll());
         return "editStaticPage";
     }
-    
+
     @PostMapping("editStaticPage")
     public String performEditStaticPage(StaticPage staticPage) {
         staticPage = staticDao.save(staticPage);
         return "redirect:/home";
     }
-    
+
     @GetMapping("deleteStaticPage")
     public String deleteStaticPage(Integer id) {
         staticDao.deleteById(id);

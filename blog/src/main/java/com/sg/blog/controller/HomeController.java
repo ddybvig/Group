@@ -49,6 +49,7 @@ public class HomeController {
                     .collect(Collectors.toList()));
         }
         model.addAttribute("tagMap", tagMap);
+        model.addAttribute("staticpages", staticDao.findAll());
         return "home";
     }
 
@@ -87,6 +88,7 @@ public class HomeController {
                         .collect(Collectors.toList()));
             }
             model.addAttribute("tagMap", tagMap);
+            model.addAttribute("staticpages", staticDao.findAll());
             return "home";
         }
     }
