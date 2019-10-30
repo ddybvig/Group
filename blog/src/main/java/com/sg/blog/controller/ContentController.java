@@ -78,7 +78,9 @@ public class ContentController {
         }
         blogPost.setTags(tags);
         blogPost.setDate(LocalDateTime.now().withNano(0));
-        if (request.getParameter("expDate") != null) {
+        if (request.getParameter("expDate") == "") {
+            //do nothing
+        } else {
             blogPost.setExpirationDate(LocalDate.parse(request.getParameter("expDate"), DateTimeFormatter.ISO_DATE));
         }
         blogPost.setApproved(request.isUserInRole("ROLE_ADMIN"));

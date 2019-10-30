@@ -39,7 +39,7 @@ public class HomeController {
 
     @GetMapping({"/", "/home"})
     public String displayHomePage(Model model) {
-        List<BlogPost> posts = blogDao.findAll();
+        List<BlogPost> posts = blogDao.findByApprovedTrue();
         model.addAttribute("posts", posts);
         Map<Integer, List<String>> tagMap = new HashMap<>();
         for (BlogPost post : posts) {
@@ -78,7 +78,7 @@ public class HomeController {
         } else {
             String searchErrorMessage = "Tag not found. Please check spelling and verify there are no extra spaces or characters, or search for a new tag.";
             model.addAttribute("searchErrorMessage", searchErrorMessage);
-            List<BlogPost> posts = blogDao.findAll();
+            List<BlogPost> posts = blogDao.findByApprovedTrue();
             model.addAttribute("posts", posts);
             Map<Integer, List<String>> tagMap = new HashMap<>();
             for (BlogPost post : posts) {

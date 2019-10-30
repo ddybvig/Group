@@ -48,10 +48,21 @@ public class ApprovalController {
     }
 
     @GetMapping("approveContent")
-    public String approveContent(Integer id) {
+    public String approveContent(Integer id, Model model) {
         BlogPost post = blogDao.findById(id).orElse(null);
         post.setApproved(true);
         blogDao.save(post);
+        List<BlogPost> posts = blogDao.findByApprovedFalse();
+        Map<Integer, List<String>> tagMap = new HashMap<>();
+        for (BlogPost postReload : posts) {
+            List<Tag> tags = post.getTags();
+            tagMap.put(post.getId(), post.getTags().stream()
+                    .map(t -> t.getName())
+                    .collect(Collectors.toList()));
+        }
+        model.addAttribute("posts", posts);
+        model.addAttribute("tagMap", tagMap);
+        model.addAttribute("staticpages", staticDao.findAll());
         return "approval";
     }
 }
