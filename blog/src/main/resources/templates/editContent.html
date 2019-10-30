@@ -24,7 +24,7 @@
         <div class="container">
             <h1>Dale's House of Memes</h1>
             <hr/>
-            <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd">
+            <nav class="navbar navbar-expand-lg row" style="background-color: #e3f2fd">
                 <div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -34,16 +34,28 @@
                         </li>
                         <div sec:authorize="isAuthenticated()">
                             <li class="nav-item">
-                                <a class="nav-link" href="addContent">add content
+                                <a class="nav-link" href="addContent">Add Content
                                 </a>
                             </li>
                         </div>
-                        <li class="nav-item" th:each="staticpage : ${staticpages}">
+                        <li class="nav-item" th:each="page : ${staticpages}">
                             <a class="nav-link active"
-                               th:text="${staticpage.title}"
-                               th:href="@{/viewPage(id=${staticpage.id})}">
+                               th:text="${page.title}"
+                               th:href="@{/viewPage(id=${page.id})}">
                             </a>
                         </li>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link" href="addStaticPage">Add Static Page
+                                </a>
+                            </li>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link" href="approval">Pending Approvals
+                                </a>
+                            </li>
+                        </div>
                         <form action="searchResults" class="form-inline">
                             <input class="form-control mr-sm-2" type="text" name="searchInput" id="searchInput" placeholder="Search" aria-label="Search"/>
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Tag</button>

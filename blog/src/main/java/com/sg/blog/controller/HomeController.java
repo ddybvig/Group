@@ -74,6 +74,7 @@ public class HomeController {
                 }
             }
             model.addAttribute("posts", posts);
+            model.addAttribute("staticpages", staticDao.findAll());
             return "searchResults";
         } else {
             String searchErrorMessage = "Tag not found. Please check spelling and verify there are no extra spaces or characters, or search for a new tag.";
