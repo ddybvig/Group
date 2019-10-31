@@ -13,6 +13,15 @@ h1 {
 h2 {
     font-family: 'Creepster', cursive;
     text-align: center;
+    
+}
+
+ a{
+    color:black;
+}
+
+ a:hover{
+    color:orange;
 }
 
 h3{
@@ -24,12 +33,10 @@ h3{
 }
 
 .container {
-    background-color: #7b1813;
-}
-.nav-item{
-    background-color: antiquewhite;
+   
 }
 
-.navbar-nav{
-    
+
+.navbar{
+    background-color:orange;
 }
