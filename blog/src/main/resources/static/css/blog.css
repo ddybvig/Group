@@ -1,5 +1,7 @@
 html, body {
     font-family: 'Nunito', sans-serif;
+    background-color: #edeced
+
 }
 
 h1 {
@@ -19,4 +21,15 @@ h3{
 
 .authorize-div {
     background-color: #FF5D00;
+}
+
+.container {
+    background-color: #7b1813;
+}
+.nav-item{
+    background-color: antiquewhite;
+}
+
+.navbar-nav{
+    
 }
