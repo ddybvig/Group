@@ -51,8 +51,11 @@
                             </a>
                         </li>
                         <form action="searchResults" class="form-inline">
-                            <input class="form-control mr-sm-2" type="text" name="searchInput" id="searchInput" placeholder="Search" aria-label="Search"/>
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Tag</button>
+                            <input class="form-control mr-sm-2" type="text" name="searchInput"
+                                   id="searchInput" placeholder="Search" aria-label="Search"/>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                                Search By Tag
+                            </button>
                         </form>
                     </ul>
                 </div>
@@ -90,7 +93,13 @@
                     </p> 
                     <div th:text="${#temporals.format(post.date, 'MMMM-dd-yyyy')}"></div>
                     <p th:utext="${post.body}"> post body</p>
-                    <p th:text="${#strings.listJoin(tagMap.get(post.id), ' ')}"></p>
+                    <div>
+                        <a class="btn btn-outline"
+                           th:each="tag : ${post.tags}"
+                           th:text="${tag.name}"
+                           th:href="@{/searchResults(searchInput=${tag.name})}">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

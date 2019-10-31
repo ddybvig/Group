@@ -91,7 +91,13 @@
                     <div class="row pl-4 pr-4">
                         <p th:utext="${blogpost.body}"> post body</p>
                     </div>
-                    <div class="tags" th:text="${#strings.listJoin(tagMap.get(blogpost.id), ' ')}"></div>
+                    <div>
+                        <a class="btn btn-outline"
+                           th:each="tag : ${blogpost.tags}"
+                           th:text="${tag.name}"
+                           th:href="@{/searchResults(searchInput=${tag.name})}">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

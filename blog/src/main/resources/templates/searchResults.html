@@ -34,12 +34,6 @@
                                 </a>
                             </li>
                         </div>
-                        <li class="nav-item" th:each="page : ${staticpages}">
-                            <a class="nav-link active"
-                               th:text="${page.title}"
-                               th:href="@{/viewPage(id=${page.id})}">
-                            </a>
-                        </li>
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                             <li class="nav-item">
                                 <a class="nav-link" href="addStaticPage">Add Static Page
@@ -52,6 +46,12 @@
                                 </a>
                             </li>
                         </div>
+                        <li class="nav-item" th:each="page : ${staticpages}">
+                            <a class="nav-link active"
+                               th:text="${page.title}"
+                               th:href="@{/viewPage(id=${page.id})}">
+                            </a>
+                        </li>
                         <form action="searchResults" class="form-inline">
                             <input class="form-control mr-sm-2" type="text" name="searchInput" id="searchInput" placeholder="Search" aria-label="Search"/>
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Tag</button>
@@ -97,7 +97,13 @@
                     <div th:utext="${post.body}">
                         post body
                     </div>
-                    <div th:text="${#strings.listJoin(tagMap.get(post.id), ' ')}"></div>
+                    <div>
+                        <a class="btn btn-outline"
+                           th:each="tag : ${post.tags}"
+                           th:text="${tag.name}"
+                           th:href="@{/searchResults(searchInput=${tag.name})}">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

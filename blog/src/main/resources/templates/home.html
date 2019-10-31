@@ -100,7 +100,13 @@
                     <div th:utext="${post.body}">
                         post body
                     </div>
-                    <div class="tags" th:text="${#strings.listJoin(tagMap.get(post.id), ' ')}"></div>
+                    <div>
+                        <a class="btn btn-outline"
+                           th:each="tag : ${post.tags}"
+                           th:text="${tag.name}"
+                           th:href="@{/searchResults(searchInput=${tag.name})}">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
