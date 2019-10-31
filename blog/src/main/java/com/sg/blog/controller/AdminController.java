@@ -56,7 +56,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("deleteUser")
+    @PostMapping("deleteUser")
     public String deleteUser(Integer id) {
         users.deleteById(id);
         return "redirect:/admin";

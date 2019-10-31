@@ -140,7 +140,11 @@
                                     </div>
                                 </td>
                                 <td th:text="${currentUser.enabled}">enabled</td>
-                                <td><a href="#" th:href="@{/editUser(id=${currentUser.id})}">Edit</a></td>
+                                <td>
+                                    <a href="#" th:href="@{/editUser(id=${currentUser.id})}">
+                                        Edit
+                                    </a>
+                                </td>
                                 <td>
                                     <form class="form-inline" 
                                           method="POST" 
