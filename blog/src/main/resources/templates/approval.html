@@ -32,12 +32,6 @@
                                 </a>
                             </li>
                         </div>
-                        <li class="nav-item" th:each="page : ${staticpages}">
-                            <a class="nav-link active"
-                               th:text="${page.title}"
-                               th:href="@{/viewPage(id=${page.id})}">
-                            </a>
-                        </li>
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                             <li class="nav-item">
                                 <a class="nav-link" href="addStaticPage">Add Static Page
@@ -50,6 +44,12 @@
                                 </a>
                             </li>
                         </div>
+                        <li class="nav-item" th:each="page : ${staticpages}">
+                            <a class="nav-link active"
+                               th:text="${page.title}"
+                               th:href="@{/viewPage(id=${page.id})}">
+                            </a>
+                        </li>
                         <form action="searchResults" class="form-inline">
                             <input class="form-control mr-sm-2" type="text" name="searchInput" id="searchInput" placeholder="Search" aria-label="Search"/>
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Tag</button>
@@ -57,8 +57,8 @@
                     </ul>
                 </div>
             </nav>
-            <div class="authorize-div" sec:authorize="isAuthenticated()">
-                <form class="form-inline" 
+            <div class="row authorize-div pl-4 pr-4" sec:authorize="isAuthenticated()">
+                <form class="form-inline"
                       method="POST" 
                       action="/logout">
                     <input type="hidden" 
@@ -72,12 +72,23 @@
                             type="submit">Logout</button>
                 </form>
             </div>
-            <h2>Approvals</h2>
-            <hr/>
-            <div>
-                <div th:each="post : ${posts}">
+            <h2 class="pt-3">Approvals</h2>
+            <hr class="mb-0"/>
+            <div class="row">
+                <div class="border border-dark rounded container mt-4 pt-3 pb-3"
+                     th:each="post : ${posts}">
                     <h2 th:text="${post.title}">title</h2>
-                    <div sec:authorize="isAuthenticated()"><a th:href="@{/approveContent(id=${post.id})}">Approve</a></div>
+                    <hr/>
+                    <div class="col-1 offset-11" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/approveContent(id=${post.id})}">
+                            Approve
+                        </a>
+                    </div>
+                    <hr sec:authorize="isAuthenticated()"/>
+                    <p th:text="'Author: ' + ${post.user.username}">
+                            username
+                    </p> 
+                    <div th:text="${#temporals.format(post.date, 'MMMM-dd-yyyy')}"></div>
                     <p th:utext="${post.body}"> post body</p>
                     <p th:text="${#strings.listJoin(tagMap.get(post.id), ' ')}"></p>
                 </div>
