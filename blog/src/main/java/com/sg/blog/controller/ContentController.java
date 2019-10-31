@@ -18,7 +18,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -160,6 +163,20 @@ public class ContentController {
         model.addAttribute("staticpage", staticPage);
         model.addAttribute("staticpages", staticDao.findAll());
         return "viewPage";
+    }
+
+    @GetMapping("viewBlogPost")
+    public String viewBlogPost(Integer id, Model model) {
+        BlogPost blogPost = blogDao.findById(id).orElse(null);
+        model.addAttribute("blogpost", blogPost);
+        model.addAttribute("staticpages", staticDao.findAll());
+        Map<Integer, List<String>> tagMap = new HashMap<>();
+        List<Tag> tags = blogPost.getTags();
+        tagMap.put(blogPost.getId(), blogPost.getTags().stream()
+                .map(t -> t.getName())
+                .collect(Collectors.toList()));
+        model.addAttribute("tagMap", tagMap);
+        return "viewBlogPost";
     }
 
     @GetMapping("editStaticPage")

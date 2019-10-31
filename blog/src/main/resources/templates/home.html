@@ -78,7 +78,7 @@
             <div class="row"><span th:if="${searchErrorMessage != null}" th:text="${searchErrorMessage}" class="alert alert-danger"></span></div>
             <div class="row">
                 <div th:each="post : ${posts}" class="border border-dark rounded container mt-4 pt-3 pb-3">
-                    <h2 th:text="${post.title}">title</h2>
+                    <h2> <a th:text="${post.title}" th:href="@{/viewBlogPost(id=${post.id})}">title</a></h2>
                     <hr/>
                     <div class="row" sec:authorize="isAuthenticated()">
                         <div class="col-1 offset-9">
@@ -100,7 +100,13 @@
                     <div th:utext="${post.body}">
                         post body
                     </div>
-                    <div class="tags" th:text="${#strings.listJoin(tagMap.get(post.id), ' ')}"></div>
+                    <div>
+                        <a class="btn btn-outline"
+                           th:each="tag : ${post.tags}"
+                           th:text="${tag.name}"
+                           th:href="@{/searchResults(searchInput=${tag.name})}">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

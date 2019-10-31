@@ -11,13 +11,8 @@ import com.sg.blog.dao.TagDao;
 import com.sg.blog.entities.BlogPost;
 import com.sg.blog.entities.Tag;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,21 +43,12 @@ public class HomeController {
             }
         }
         model.addAttribute("posts", posts);
-        Map<Integer, List<String>> tagMap = new HashMap<>();
-        for (BlogPost post : posts) {
-            List<Tag> tags = post.getTags();
-            tagMap.put(post.getId(), post.getTags().stream()
-                    .map(t -> t.getName())
-                    .collect(Collectors.toList()));
-        }
-        model.addAttribute("tagMap", tagMap);
         model.addAttribute("staticpages", staticDao.findAll());
         return "home";
     }
 
     @GetMapping("searchResults")
-    public String getSearchResults(HttpServletRequest request, Model model) {
-        String searchInput = request.getParameter("searchInput");
+    public String getSearchResults(String searchInput, Model model) {
         List<Tag> tags = tagDao.findAll();
         Tag tagFromSearch = null;
         for (Tag someTag : tags) {
@@ -74,21 +60,16 @@ public class HomeController {
             Integer tagId = tagFromSearch.getId();
             List<BlogPost> posts = new ArrayList<>();
             for (BlogPost post : blogDao.findByApprovedTrue()) {
-                for (Tag tag : post.getTags()) {
-                    if ((tag.getId() == tagId) && !post.getExpirationDate().isBefore(LocalDate.now())) {
+                if(post.getExpirationDate() != null && post.getExpirationDate().isBefore(LocalDate.now())){
+                    continue;
+                }
+                for(Tag tag : post.getTags()) {
+                    if (tag.getId() == tagId){
                         posts.add(post);
                     }
                 }
             }
             model.addAttribute("posts", posts);
-            Map<Integer, List<String>> tagMap = new HashMap<>();
-            for (BlogPost post : posts) {
-                List<Tag> tagsReload = post.getTags();
-                tagMap.put(post.getId(), post.getTags().stream()
-                        .map(t -> t.getName())
-                        .collect(Collectors.toList()));
-            }
-            model.addAttribute("tagMap", tagMap);
             model.addAttribute("staticpages", staticDao.findAll());
             return "searchResults";
         } else {
@@ -96,14 +77,6 @@ public class HomeController {
             model.addAttribute("searchErrorMessage", searchErrorMessage);
             List<BlogPost> posts = blogDao.findByApprovedTrue();
             model.addAttribute("posts", posts);
-            Map<Integer, List<String>> tagMap = new HashMap<>();
-            for (BlogPost post : posts) {
-                List<Tag> tagsReload = post.getTags();
-                tagMap.put(post.getId(), post.getTags().stream()
-                        .map(t -> t.getName())
-                        .collect(Collectors.toList()));
-            }
-            model.addAttribute("tagMap", tagMap);
             model.addAttribute("staticpages", staticDao.findAll());
             return "home";
         }
