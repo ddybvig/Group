@@ -36,7 +36,20 @@ h3{
    
 }
 
-
 .navbar{
     background-color:orange;
+}
+
+nav a:hover{
+    color:#346633;
+    font-weight: bold;
+}
+.btn-link{
+    color:black;
+}
+
+.btn-link:hover{
+    color:#346633;
+    font-weight: bold;
+    text-decoration: none;
 }
