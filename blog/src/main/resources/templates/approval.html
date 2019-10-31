@@ -81,7 +81,7 @@
                      th:each="post : ${posts}">
                     <h2 th:text="${post.title}">title</h2>
                     <hr/>
-                    <div class="col-1 offset-11" sec:authorize="isAuthenticated()">
+                    <div class="col-1 offset-11 edit-link" sec:authorize="isAuthenticated()">
                         <a th:href="@{/approveContent(id=${post.id})}">
                             Approve
                         </a>
