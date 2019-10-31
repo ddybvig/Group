@@ -10,6 +10,8 @@ import com.sg.blog.dao.StaticPageDao;
 import com.sg.blog.dao.TagDao;
 import com.sg.blog.entities.BlogPost;
 import com.sg.blog.entities.Tag;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +41,12 @@ public class HomeController {
 
     @GetMapping({"/", "/home"})
     public String displayHomePage(Model model) {
-        List<BlogPost> posts = blogDao.findByApprovedTrue();
+        List<BlogPost> posts = new ArrayList<>();
+        for (BlogPost post : blogDao.findByApprovedTrue()) {
+            if (!post.getExpirationDate().isBefore(LocalDate.now())) {
+                posts.add(post);
+            }
+        }
         model.addAttribute("posts", posts);
         Map<Integer, List<String>> tagMap = new HashMap<>();
         for (BlogPost post : posts) {
@@ -66,9 +73,9 @@ public class HomeController {
         if (tagFromSearch != null) {
             Integer tagId = tagFromSearch.getId();
             List<BlogPost> posts = new ArrayList<>();
-            for (BlogPost post : blogDao.findAll()) {
+            for (BlogPost post : blogDao.findByApprovedTrue()) {
                 for (Tag tag : post.getTags()) {
-                    if (tag.getId() == tagId) {
+                    if ((tag.getId() == tagId) && !post.getExpirationDate().isBefore(LocalDate.now())) {
                         posts.add(post);
                     }
                 }

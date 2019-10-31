@@ -79,7 +79,7 @@ public class ContentController {
         blogPost.setTags(tags);
         blogPost.setDate(LocalDateTime.now().withNano(0));
         if (request.getParameter("expDate") == "") {
-            //do nothing
+            blogPost.setExpirationDate(LocalDate.parse("2999-12-31", DateTimeFormatter.ISO_DATE));
         } else {
             blogPost.setExpirationDate(LocalDate.parse(request.getParameter("expDate"), DateTimeFormatter.ISO_DATE));
         }
