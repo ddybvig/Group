@@ -17,7 +17,6 @@
     <body>
         <div class="container">
             <h1>Dale's House of Memes</h1>
-            <hr/>
             <nav class="navbar navbar-expand-lg row" style="background-color: #e3f2fd">
                 <div>
                     <ul class="navbar-nav">
@@ -57,7 +56,7 @@
                     </ul>
                 </div>
             </nav>
-            <div class="authorize-div" sec:authorize="isAuthenticated()">
+            <div class="row authorize-div pl-4 pr-4" sec:authorize="isAuthenticated()">
                 <form class="form-inline" 
                       method="POST" 
                       action="/logout">
@@ -72,11 +71,27 @@
                             type="submit">Logout</button>
                 </form>
             </div>
-            <h2 th:text="${staticpage.title}"></h2>
-            <hr/>
-            <div>
-                <div sec:authorize="isAuthenticated()"><a th:href="@{/deleteStaticPage(id=${staticpage.id})}">Delete</a></div>
-                <p th:utext="${staticpage.body}"> post body</p>
+            <div class="row">
+                <div class="border border-dark rounded container mt-4 pt-3">
+                    <h2 th:text="${staticpage.title}"></h2>
+                    <hr/>
+                    <div class="row" sec:authorize="isAuthenticated()">
+                        <div class="col-1 offset-10">
+                            <a th:href="@{/editStaticPage(id=${staticpage.id})}">
+                                Edit
+                            </a>
+                        </div>
+                        <div class="col-1">
+                            <a th:href="@{/deleteStaticPage(id=${staticpage.id})}">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                    <hr sec:authorize="isAuthenticated()"/>
+                    <div class="row pl-4 pr-4">
+                        <p th:utext="${staticpage.body}"> post body</p>
+                    </div>
+                </div>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
