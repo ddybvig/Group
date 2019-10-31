@@ -18,9 +18,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BlogPostDao extends JpaRepository<BlogPost, Integer> {
 
-    List<BlogPost> findByApprovedFalse();
+    List<BlogPost> findByApprovedFalseOrderByDateDesc();
 
-    List<BlogPost> findByApprovedTrue();
+    List<BlogPost> findByApprovedTrueOrderByDateDesc();
 
     List<BlogPost> findAllByTags(Tag tag);
 }

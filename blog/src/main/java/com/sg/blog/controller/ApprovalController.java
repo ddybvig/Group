@@ -33,7 +33,7 @@ public class ApprovalController {
 
     @GetMapping("approval")
     public String displayApprovalPage(Model model) {
-        List<BlogPost> posts = blogDao.findByApprovedFalse();
+        List<BlogPost> posts = blogDao.findByApprovedFalseOrderByDateDesc();
         Map<Integer, List<String>> tagMap = new HashMap<>();
         for (BlogPost post : posts) {
             List<Tag> tags = post.getTags();
@@ -52,7 +52,7 @@ public class ApprovalController {
         BlogPost post = blogDao.findById(id).orElse(null);
         post.setApproved(true);
         blogDao.save(post);
-        List<BlogPost> posts = blogDao.findByApprovedFalse();
+        List<BlogPost> posts = blogDao.findByApprovedFalseOrderByDateDesc();
         Map<Integer, List<String>> tagMap = new HashMap<>();
         for (BlogPost postReload : posts) {
             List<Tag> tags = post.getTags();

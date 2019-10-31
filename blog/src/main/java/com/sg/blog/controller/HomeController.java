@@ -37,7 +37,7 @@ public class HomeController {
     @GetMapping({"/", "/home"})
     public String displayHomePage(Model model) {
         List<BlogPost> posts = new ArrayList<>();
-        for (BlogPost post : blogDao.findByApprovedTrue()) {
+        for (BlogPost post : blogDao.findByApprovedTrueOrderByDateDesc()) {
             if (!post.getExpirationDate().isBefore(LocalDate.now())) {
                 posts.add(post);
             }
@@ -59,7 +59,7 @@ public class HomeController {
         if (tagFromSearch != null) {
             Integer tagId = tagFromSearch.getId();
             List<BlogPost> posts = new ArrayList<>();
-            for (BlogPost post : blogDao.findByApprovedTrue()) {
+            for (BlogPost post : blogDao.findByApprovedTrueOrderByDateDesc()) {
                 if(post.getExpirationDate() != null && post.getExpirationDate().isBefore(LocalDate.now())){
                     continue;
                 }
@@ -75,7 +75,13 @@ public class HomeController {
         } else {
             String searchErrorMessage = "Tag not found. Please check spelling and verify there are no extra spaces or characters, or search for a new tag.";
             model.addAttribute("searchErrorMessage", searchErrorMessage);
-            List<BlogPost> posts = blogDao.findByApprovedTrue();
+            List<BlogPost> posts = new ArrayList<>();
+            for (BlogPost post : blogDao.findByApprovedTrueOrderByDateDesc()) {
+                if(post.getExpirationDate() != null && post.getExpirationDate().isBefore(LocalDate.now())){
+                    continue;
+                }
+                posts.add(post);
+            }
             model.addAttribute("posts", posts);
             model.addAttribute("staticpages", staticDao.findAll());
             return "home";

@@ -45,6 +45,12 @@
                                 </a>
                             </li>
                         </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link" href="admin">Admin
+                                </a>
+                            </li>
+                        </div>
                         <li class="nav-item" th:each="page : ${staticpages}">
                             <a class="nav-link active"
                                th:text="${page.title}"
@@ -66,8 +72,7 @@
                            th:name="${_csrf.parameterName}" 
                            th:value="${_csrf.token}"/>
                     <label for="submit">
-                        Hello : <span th:text="${#authentication.name}">
-                        </span>&nbsp;&nbsp;&nbsp;|
+                        Hello:&nbsp;<span th:text="${#authentication.name}"></span>
                     </label>
                     <button class="btn btn-link" 
                             id="submit" 
